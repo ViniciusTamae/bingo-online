@@ -64,6 +64,18 @@
       </div>
     </div>
 
+    <!-- Pop-up de confirmação ao desmarcar um número já sorteado -->
+    <div class="modal-overlay" id="modal-desmarcar" hidden>
+      <div class="modal">
+        <h3>❌ Desmarcar número?</h3>
+        <p id="texto-desmarcar"></p>
+        <div class="modal-botoes">
+          <button id="btn-cancelar-desmarcar" class="btn-cancelar">Cancelar</button>
+          <button id="btn-confirmar-desmarcar" class="btn-confirmar">Sim, desmarcar</button>
+        </div>
+      </div>
+    </div>
+
     <script src="src/nomes.js"></script>
     <script src="src/pedra.js"></script>
     <script src="src/script.js"></script>
