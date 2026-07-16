@@ -1,7 +1,7 @@
 {
   "name": "bingo-online",
-  "version": "1.0.1",
-  "description": "Bingo Online - Patrocínios SOBA",
+  "version": "1.0.2",
+  "description": "Bingo Beneficente - 18º Festa do Soba Okinawa",
   "main": "main.js",
   "author": "Tamae",
   "license": "MIT",
@@ -15,7 +15,7 @@
   },
   "build": {
     "appId": "com.tamae.bingoonline",
-    "productName": "Bingo Online",
+    "productName": "Bingo Beneficente",
     "files": [
       "**/*",
       "!.github/**",
