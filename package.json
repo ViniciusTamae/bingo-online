@@ -1,0 +1,32 @@
+{
+  "name": "bingo-online",
+  "version": "1.0.0",
+  "description": "Bingo Online - Patrocínios SOBA",
+  "main": "main.js",
+  "author": "Tamae",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.tamae.bingoonline",
+    "productName": "Bingo Online",
+    "files": [
+      "**/*",
+      "!.github/**",
+      "!README.md"
+    ],
+    "win": {
+      "target": ["portable", "nsis"]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

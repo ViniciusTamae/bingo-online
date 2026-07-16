@@ -1,0 +1,10 @@
+Coloque aqui as fotos das pedras (opcional).
+
+O nome do arquivo deve ser o número da pedra:
+  1.jpg  (ou 1.png)
+  2.jpg  (ou 2.png)
+  ...
+  75.jpg (ou 75.png)
+
+Se a foto existir, ela aparece no lugar da bola desenhada.
+Se não existir, o app mostra a bola colorida com o número.

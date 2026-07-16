@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bingo Online</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>🎱 Bingo Okinawa</h1>
+      <a href="transmissao.html" target="_blank" class="btn-transmissao"
+        >📺 Abrir tela de transmissão</a
+      >
+    </header>
+
+    <main>
+      <!-- Formulário para sortear o número -->
+      <section class="painel-entrada">
+        <form id="form-numero" autocomplete="off">
+          <input
+            type="number"
+            id="input-numero"
+            min="1"
+            max="75"
+            placeholder="Digite um número (1 a 75)"
+            required
+          />
+          <button type="submit">Enviar</button>
+        </form>
+        <p id="mensagem-erro" class="erro" hidden></p>
+      </section>
+
+      <!-- Palco onde a pedra aparece com animação (criada pelo script.js) -->
+      <section class="palco" id="palco">
+        <p class="dica" id="dica">
+          Digite um número acima para sortear a pedra 👆
+        </p>
+      </section>
+
+      <!-- Histórico de números já sorteados -->
+      <section class="historico">
+        <h2>
+          Números sorteados
+          <button id="btn-desfazer" title="Desfazer o último número sorteado">↩️ Desfazer último</button>
+          <button id="btn-limpar" title="Recomeçar o jogo">🔄 Reiniciar</button>
+        </h2>
+        <p class="dica-desmarcar">
+          Clicou errado? Clique de novo em cima do número no tabuleiro para desmarcá-lo.
+        </p>
+        <div class="tabuleiro" id="tabuleiro"></div>
+      </section>
+    </main>
+
+    <!-- Pop-up de confirmação do reinício -->
+    <div class="modal-overlay" id="modal-reiniciar" hidden>
+      <div class="modal">
+        <h3>🔄 Reiniciar o jogo?</h3>
+        <p>Todos os números sorteados serão apagados.</p>
+        <div class="modal-botoes">
+          <button id="btn-cancelar-reinicio" class="btn-cancelar">Cancelar</button>
+          <button id="btn-confirmar-reinicio" class="btn-confirmar">Sim, reiniciar</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="nomes.js"></script>
+    <script src="pedra.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

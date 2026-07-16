@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bingo — Transmissão</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Tela limpa, só com a pedra — pensada para captura no OBS */
+    body.transmissao {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    body.transmissao .palco {
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    body.transmissao .pedra {
+      width: 260px;
+      height: 260px;
+    }
+
+    body.transmissao .pedra span {
+      font-size: 6rem;
+    }
+
+    body.transmissao .letra-bingo {
+      font-size: 2.4rem;
+    }
+
+    body.transmissao .nome-pessoa {
+      font-size: 2.6rem;
+    }
+
+    body.transmissao .telefone-pessoa {
+      font-size: 1.8rem;
+    }
+  </style>
+</head>
+<body class="transmissao">
+  <section class="palco" id="palco"></section>
+
+  <script src="nomes.js"></script>
+  <script src="pedra.js"></script>
+  <script>
+    // A tela de transmissão fica observando o último número sorteado
+    // (gravado pela tela de controle no localStorage) e anima a pedra
+    // sempre que ele muda. Funciona com as duas páginas abertas no
+    // mesmo navegador.
+    const palco = document.getElementById("palco");
+    let ultimoTs = null;
+
+    function mostrarPedra(numero) {
+      const antigo = palco.querySelector(".pedra-container");
+      if (antigo) antigo.remove();
+      if (numero) palco.appendChild(criarPedraElemento(numero));
+    }
+
+    function verificar() {
+      let dados;
+      try {
+        dados = JSON.parse(localStorage.getItem("bingo-ultimo") || "null");
+      } catch (e) {
+        dados = null;
+      }
+
+      if (!dados) {
+        if (ultimoTs !== null) {
+          ultimoTs = null;
+          mostrarPedra(null);
+        }
+        return;
+      }
+
+      if (dados.ts !== ultimoTs) {
+        ultimoTs = dados.ts;
+        mostrarPedra(dados.numero);
+      }
+    }
+
+    // Atualização instantânea quando outra aba grava no localStorage…
+    window.addEventListener("storage", verificar);
+    // …e verificação periódica como garantia (alguns navegadores não
+    // disparam o evento entre arquivos locais).
+    setInterval(verificar, 400);
+
+    // Ao abrir, já mostra a última pedra sorteada (sem animar de novo
+    // não é possível distinguir, então anima uma vez).
+    verificar();
+  </script>
+</body>
+</html>
