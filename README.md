@@ -15,7 +15,7 @@ animação e o nome da pessoa correspondente aparece embaixo.
 
 ## Como cadastrar os nomes
 
-Edite o arquivo `nomes.js`. Cada número tem um nome:
+Edite o arquivo `src/nomes.js`. Cada número tem um nome:
 
 ```js
 const NOMES = {
@@ -34,13 +34,16 @@ da bola desenhada.
 
 ## Arquivos
 
-| Arquivo      | O que é                                    |
-| ------------ | ------------------------------------------ |
-| `index.html` | Página principal                           |
-| `style.css`  | Visual e animações                         |
-| `script.js`  | Lógica do jogo                             |
-| `nomes.js`   | Lista de nomes (edite aqui!)               |
-| `img/`       | Fotos opcionais das pedras                 |
+| Arquivo            | O que é                                          |
+| ------------------ | ------------------------------------------------- |
+| `index.html`        | Página principal                                  |
+| `transmissao.html`  | Tela limpa para transmissão/captura (OBS)         |
+| `main.js`           | Processo principal do Electron (app desktop)      |
+| `src/style.css`     | Visual e animações                                |
+| `src/script.js`     | Lógica do jogo                                    |
+| `src/pedra.js`      | Criação da pedra (compartilhado entre as telas)   |
+| `src/nomes.js`      | Lista de nomes (edite aqui!)                      |
+| `img/`              | Fotos opcionais das pedras                        |
 
 ## Baixar como programa para Windows (.exe)
 
