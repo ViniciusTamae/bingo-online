@@ -3,34 +3,153 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bingo — Transmissão</title>
+  <title>Bingo Beneficente — Transmissão</title>
   <link rel="stylesheet" href="src/style.css" />
   <style>
-    /* Tela limpa, só com a pedra — pensada para captura no OBS */
+    /* Tela de captura para o telão (OBS) — mesma identidade visual do
+       evento, com marca discreta no topo e brilho atrás da pedra para
+       destacar o número mesmo à distância. */
     body.transmissao {
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
       overflow: hidden;
+      position: relative;
+    }
+
+    /* Cerejeiras nos quatro cantos — mais espaço disponível aqui do
+       que na tela de controle, então a moldura fica completa. */
+    body.transmissao::before,
+    body.transmissao::after {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23e07a93' fill-opacity='0.5'%3E%3Cellipse cx='50' cy='28' rx='13' ry='19'/%3E%3Cellipse cx='50' cy='28' rx='13' ry='19' transform='rotate(72 50 50)'/%3E%3Cellipse cx='50' cy='28' rx='13' ry='19' transform='rotate(144 50 50)'/%3E%3Cellipse cx='50' cy='28' rx='13' ry='19' transform='rotate(216 50 50)'/%3E%3Cellipse cx='50' cy='28' rx='13' ry='19' transform='rotate(288 50 50)'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='7' fill='%23f4c542' fill-opacity='0.7'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    body.transmissao::before {
+      top: -20px;
+      left: -20px;
+      transform: rotate(-18deg);
+    }
+
+    body.transmissao::after {
+      bottom: -20px;
+      right: -20px;
+      transform: rotate(162deg);
+    }
+
+    .marca-evento {
+      position: fixed;
+      top: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 28px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--dourado-linha);
+      border-radius: var(--radius-pill);
+      box-shadow: 0 8px 24px var(--sombra);
+      z-index: 2;
+    }
+
+    .marca-evento img,
+    .marca-evento svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .marca-evento .textos {
+      text-align: left;
+      line-height: 1.25;
+    }
+
+    .marca-evento .titulo {
+      font-family: var(--font-titulo);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--texto);
+    }
+
+    .marca-evento .subtitulo {
+      font-family: var(--font-corpo);
+      font-weight: 600;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--vermelho-escuro);
+    }
+
+    /* Brilho suave atrás da pedra, para destacar o número no telão */
+    .palco::before {
+      content: "";
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(244, 197, 66, 0.35) 0%, transparent 70%);
+      z-index: 0;
     }
 
     body.transmissao .palco {
+      position: relative;
       min-height: 100vh;
       margin: 0;
+      z-index: 1;
+    }
+
+    /* Mensagem de espera, visível até o primeiro número ser sorteado */
+    .placeholder-espera {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      opacity: 0.75;
+    }
+
+    .placeholder-espera svg {
+      width: 80px;
+      height: 80px;
+    }
+
+    .placeholder-espera p {
+      font-family: var(--font-titulo);
+      font-weight: 600;
+      font-size: 1.6rem;
+      color: var(--texto-dim);
+    }
+
+    .palco:has(.pedra-container) .placeholder-espera {
+      display: none;
+    }
+
+    body.transmissao .pedra-container {
+      position: relative;
+      z-index: 1;
     }
 
     body.transmissao .pedra {
-      width: 260px;
-      height: 260px;
+      width: 280px;
+      height: 280px;
     }
 
     body.transmissao .pedra span {
-      font-size: 6rem;
+      font-size: 6.4rem;
     }
 
     body.transmissao .letra-bingo {
-      font-size: 2.4rem;
+      font-size: 1.6rem;
+      padding: 8px 24px;
     }
 
     body.transmissao .nome-pessoa {
@@ -43,7 +162,40 @@
   </style>
 </head>
 <body class="transmissao">
-  <section class="palco" id="palco"></section>
+  <div class="marca-evento">
+    <svg viewBox="0 0 100 100" role="img" aria-label="Emblema do evento">
+      <circle cx="50" cy="50" r="47" fill="#FFFFFF" stroke="#F4C542" stroke-width="4" />
+      <g fill="#D62828">
+        <ellipse cx="50" cy="34" rx="10" ry="15" />
+        <ellipse cx="50" cy="34" rx="10" ry="15" transform="rotate(72 50 50)" />
+        <ellipse cx="50" cy="34" rx="10" ry="15" transform="rotate(144 50 50)" />
+        <ellipse cx="50" cy="34" rx="10" ry="15" transform="rotate(216 50 50)" />
+        <ellipse cx="50" cy="34" rx="10" ry="15" transform="rotate(288 50 50)" />
+      </g>
+      <circle cx="50" cy="50" r="9" fill="#F4C542" />
+    </svg>
+    <div class="textos">
+      <p class="titulo">Bingo Beneficente</p>
+      <p class="subtitulo">18º Festa do Soba Okinawa</p>
+    </div>
+  </div>
+
+  <section class="palco" id="palco">
+    <div class="placeholder-espera">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="47" fill="none" stroke="#F4C542" stroke-width="3" stroke-dasharray="6 8" />
+        <g fill="#e07a93" fill-opacity="0.7">
+          <ellipse cx="50" cy="34" rx="10" ry="15" />
+          <ellipse cx="50" cy="34" rx="10" ry="15" transform="rotate(72 50 50)" />
+          <ellipse cx="50" cy="34" rx="10" ry="15" transform="rotate(144 50 50)" />
+          <ellipse cx="50" cy="34" rx="10" ry="15" transform="rotate(216 50 50)" />
+          <ellipse cx="50" cy="34" rx="10" ry="15" transform="rotate(288 50 50)" />
+        </g>
+        <circle cx="50" cy="50" r="7" fill="#F4C542" />
+      </svg>
+      <p>Aguardando o próximo número…</p>
+    </div>
+  </section>
 
   <script src="src/nomes.js"></script>
   <script src="src/pedra.js"></script>

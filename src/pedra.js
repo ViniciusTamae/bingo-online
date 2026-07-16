@@ -21,8 +21,8 @@ function criarPedraElemento(numero) {
   container.className = "pedra-container";
 
   const letraEl = document.createElement("div");
-  letraEl.className = "letra-bingo";
-  letraEl.textContent = `${letra} - ${numero}`;
+  letraEl.className = `letra-bingo cor-${letra.toLowerCase()}`;
+  letraEl.textContent = letra;
 
   const pedraEl = document.createElement("div");
   pedraEl.className = `pedra cor-${letra.toLowerCase()}`;
@@ -61,7 +61,7 @@ function criarPedraElemento(numero) {
   if (telefone) {
     const telEl = document.createElement("div");
     telEl.className = "telefone-pessoa";
-    telEl.textContent = `📞 ${telefone}`;
+    telEl.textContent = telefone;
     container.appendChild(telEl);
   }
 

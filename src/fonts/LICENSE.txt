@@ -1,0 +1,5 @@
+Poppins e Inter são distribuídas pelo Google Fonts sob a SIL Open Font
+License 1.1 (https://openfontlicense.org).
+
+Arquivos aqui contêm apenas o subset latino (necessário para acentos do
+português), extraído para permitir uso offline no app empacotado.
