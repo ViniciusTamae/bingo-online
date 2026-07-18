@@ -1,7 +1,7 @@
 /* ============================================================
    Bingo Beneficente — 18º Festa do Soba Okinawa
-   Identidade visual do evento: vermelho, laranja e dourado sobre
-   papel bege claro, com toques de cerejeira e padrões japoneses
+   Identidade visual do evento: âmbar dourado e laranja sobre papel
+   creme claro, com toques de cerejeira e padrões japoneses
    discretos. Cartões brancos com borda dourada, cantos arredon-
    dados e sombras leves.
    ============================================================ */
@@ -11,7 +11,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("fonts/poppins-600.woff2") format("woff2");
+  src: url("../assets/fonts/poppins-600.woff2") format("woff2");
 }
 
 @font-face {
@@ -19,7 +19,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("fonts/poppins-700.woff2") format("woff2");
+  src: url("../assets/fonts/poppins-700.woff2") format("woff2");
 }
 
 @font-face {
@@ -27,27 +27,45 @@
   font-style: normal;
   font-weight: 400 600;
   font-display: swap;
-  src: url("fonts/inter-variable.woff2") format("woff2");
+  src: url("../assets/fonts/inter-variable.woff2") format("woff2");
 }
 
 :root {
-  /* Paleta oficial do evento */
-  --vermelho: #f9e076;
-  --vermelho-escuro: #b81f1f;
+  /* Paleta oficial do evento — âmbar dourado em vez de vermelho
+     vivo, mais quente e menos "alerta", com o dourado (--dourado)
+     como o mesmo anel de destaque usado em todos os selos. */
+  --vermelho: #e0a728;
+  --vermelho-escuro: #a5711a;
   --laranja: #f77f00;
   --dourado: #f4c542;
   --dourado-linha: rgba(244, 197, 66, 0.5);
+  /* Tom próprio da pedra: separado do --vermelho (usado nos botões e
+     no rodapé) porque esse precisa ficar mais saturado para servir
+     de destaque/CTA, enquanto a bola fica mais legível e menos
+     "gritante" com um amarelo mais claro. As variantes clara/escura
+     dão o degradê de esfera 3D (luz vindo de cima-esquerda). */
+  --pedra-cor: #f3d786;
+  --pedra-cor-clara: #fdf3d4;
+  --pedra-cor-escura: #d9a94a;
 
+  --bg1: #fffcf4;
+  --bg2: #faf1d8;
   --texto: #2b2b2b;
   --texto-dim: rgba(43, 43, 43, 0.65);
   --texto-faint: rgba(43, 43, 43, 0.4);
   --cartao: #ffffff;
   --sombra: rgba(43, 43, 43, 0.1);
 
-  /* Cores das cinco colunas (só tons quentes, sem azul) */
+  /* Cores das cinco colunas: um degradê quente só, madeira → bronze
+     → dourado → laranja → sakura. --col-i usava o mesmo --vermelho
+     do botão, mas esse é um amarelo-âmbar quase idêntico ao
+     --dourado do N — as duas letras ficavam parecidas demais lado a
+     lado. --vermelho-escuro (o bronze mais fechado) separa bem as
+     duas mantendo tudo dentro da mesma família de cor. */
   --col-b: #8b5a2b;
   /* madeira */
-  --col-i: var(--vermelho);
+  --col-i: var(--vermelho-escuro);
+  /* bronze */
   --col-n: var(--dourado);
   --col-g: var(--laranja);
   --col-o: #e07a93;
@@ -132,10 +150,10 @@ body {
 
 @keyframes brilho {
   0% {
-    box-shadow: 0 0 0 0 rgba(214, 40, 40, 0.5);
+    box-shadow: 0 0 0 0 rgba(224, 167, 40, 0.5);
   }
   100% {
-    box-shadow: 0 0 0 10px rgba(214, 40, 40, 0);
+    box-shadow: 0 0 0 10px rgba(224, 167, 40, 0);
   }
 }
 
@@ -155,7 +173,7 @@ header::after {
   top: 14px;
   width: 84px;
   height: 84px;
-  background-image: url("../img/mascote-shishi-soba.png");
+  background-image: url("../assets/img/mascote-shishi-soba.png");
   background-size: cover;
   background-position: center 20%;
   border-radius: 50%;
@@ -296,8 +314,15 @@ main {
   gap: 10px;
 }
 
+/* width: 100% é o que faz o flex-wrap funcionar de verdade: o pai
+   (.painel-entrada) usa align-items: center, então sem uma largura
+   explícita este flex item encolhe para caber no conteúdo em vez de
+   ocupar a largura do cartão — e só quebra linha quando estoura a
+   tela inteira (rolagem horizontal), em vez de quebrar dentro do
+   cartão como devia. */
 #form-numero {
   display: flex;
+  width: 100%;
   gap: 12px;
   flex-wrap: wrap;
   justify-content: center;
@@ -305,6 +330,7 @@ main {
 
 #input-numero {
   width: 240px;
+  max-width: 100%;
   padding: 16px 20px;
   font-family: var(--font-titulo);
   font-size: 1.2rem;
@@ -342,7 +368,7 @@ main {
   background: var(--vermelho);
   color: #fff;
   cursor: pointer;
-  box-shadow: 0 6px 18px rgba(214, 40, 40, 0.35);
+  box-shadow: 0 6px 18px rgba(224, 167, 40, 0.35);
   transition:
     background var(--transicao),
     transform var(--transicao),
@@ -466,7 +492,14 @@ main {
   background: var(--col-o);
 }
 
-/* O número sorteado — círculo vermelho enorme com borda dourada */
+/* O número sorteado — esfera com relevo de verdade, não só um
+   círculo com borda. Três ingredientes fazem o "3D": (1) o
+   background é um gradiente radial com a luz vindo de cima-esquerda
+   (claro → cor base → escuro), simulando a curvatura; (2) o brilho
+   (::before) é um reflexo de vidro/plástico, deslocado pro mesmo
+   canto da luz; (3) o aro (::after) é um anel de gradiente de
+   verdade — claro no canto que pega luz, escuro no oposto — em vez
+   de faixas de sombra com corte duro entre uma cor e outra. */
 .pedra {
   width: 220px;
   height: 220px;
@@ -475,12 +508,62 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--vermelho);
+  background: radial-gradient(
+    circle at 32% 26%,
+    var(--pedra-cor-clara) 0%,
+    var(--pedra-cor) 48%,
+    var(--pedra-cor-escura) 100%
+  );
   box-shadow:
-    0 0 0 6px var(--dourado),
-    0 16px 40px rgba(214, 40, 40, 0.35);
+    inset -10px -12px 22px rgba(126, 79, 15, 0.35),
+    inset 6px 6px 14px rgba(255, 255, 255, 0.55),
+    0 18px 34px rgba(90, 58, 12, 0.4);
   opacity: 0;
   animation: revelar 0.5s var(--ease) 0.05s forwards;
+}
+
+/* Anel — um "donut" de gradiente ao redor da bola: o padding define
+   a espessura (fina, de propósito, pra ficar discreta), e a dupla
+   máscara com mask-composite recorta só a faixa (exclui o miolo, que
+   é do tamanho exato da bola). As cores ficam dentro da mesma família
+   da própria bola (clara/dourado/escura, sem o bronze mais contrastante
+   de --vermelho-escuro), então o aro lê como um relevo sutil da
+   esfera, não como um traço chamativo por cima dela. */
+.pedra::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: -4px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(
+    135deg,
+    var(--pedra-cor-clara) 0%,
+    var(--dourado) 55%,
+    var(--pedra-cor-escura) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Reflexo — uma elipse clara e desfocada perto do canto "iluminado",
+   por baixo do número (z-index menor que o span). */
+.pedra::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 10%;
+  left: 16%;
+  width: 46%;
+  height: 30%;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 72%);
+  border-radius: 50%;
+  filter: blur(1px);
+  pointer-events: none;
 }
 
 .pedra span {
@@ -489,10 +572,11 @@ main {
   font-family: var(--font-titulo);
   font-size: 5rem;
   font-weight: 700;
-  color: #100101;
+  color: var(--texto);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
 }
 
-/* Foto da pedra (se existir na pasta img/) */
+/* Foto da pedra (se existir na pasta assets/img/) */
 .pedra img {
   position: absolute;
   z-index: 3;
@@ -500,7 +584,7 @@ main {
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: inset 0 0 0 4px var(--dourado);
+  box-shadow: inset 0 0 0 4px var(--vermelho-escuro);
 }
 
 /* Nome do patrocinador abaixo da pedra */
@@ -524,7 +608,7 @@ main {
 /* Telefone do patrocinador */
 .telefone-pessoa {
   font-family: var(--font-corpo);
-  font-size: 1rem;
+  font-size: 1.3rem;
   color: var(--texto-dim);
   text-align: center;
   opacity: 0;
@@ -541,15 +625,28 @@ main {
 }
 
 /* ---------- Histórico ---------- */
+/* "space-between" com só dois itens (título + grupo de botões): numa
+   tela larga eles ficam nas pontas; se não couber e quebrar linha, o
+   grupo de botões (que é uma unidade só, não cada botão solto) desce
+   inteiro para a linha de baixo alinhado à esquerda — antes o
+   "Reiniciar" tinha margin-left:auto próprio e, ao quebrar sozinho,
+   ficava flutuando isolado lá na ponta direita. */
 .historico h2 {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px 12px;
   margin-bottom: 8px;
   font-family: var(--font-titulo);
   font-weight: 700;
   font-size: 1.3rem;
+}
+
+.acoes-historico {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 #btn-limpar,
@@ -574,10 +671,6 @@ main {
   box-shadow: 0 4px 14px rgba(244, 197, 66, 0.5);
 }
 
-#btn-limpar {
-  margin-left: auto;
-}
-
 .dica-desmarcar {
   font-size: 0.85rem;
   color: var(--texto-faint);
@@ -585,12 +678,77 @@ main {
 }
 
 .tabuleiro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Cada linha é uma faixa do bingo (B/I/N/G/O): o selo da letra à
+   esquerda usa a mesma cor daquela coluna na pedra sorteada, para o
+   tabuleiro ensinar de cabra a relação letra-número mesmo antes do
+   primeiro sorteio. */
+/* align-items: flex-start (não center) porque em telas estreitas as
+   15 células de uma letra quebram em várias linhas — com "center" o
+   selo da letra flutuava no meio do bloco em vez de alinhar com a
+   primeira linha de números. */
+.linha-tabuleiro {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* Mesmo diâmetro do teto das células (ver .tabuleiro .celula) — selo
+   e números precisam ler como parte do mesmo conjunto de bolinhas,
+   não como um selo pequeno do lado de bolas bem maiores. */
+.letra-linha {
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: var(--font-titulo);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #fff;
+}
+
+.letra-linha.cor-b {
+  background: var(--col-b);
+}
+.letra-linha.cor-i {
+  background: var(--col-i);
+}
+.letra-linha.cor-n {
+  background: var(--col-n);
+  color: var(--texto);
+}
+.letra-linha.cor-g {
+  background: var(--col-g);
+}
+.letra-linha.cor-o {
+  background: var(--col-o);
+}
+
+.celulas-linha {
+  flex: 1;
   display: grid;
   grid-template-columns: repeat(15, 1fr);
   gap: 8px;
+  /* Centraliza cada bolinha dentro da sua coluna: sem isto, o
+     max-width abaixo deixaria uma folga só do lado direito de cada
+     célula em vez de sobrar espaço igual dos dois lados. */
+  justify-items: center;
 }
 
+/* max-width trava o tamanho da bolinha para não inflar em telas
+   largas (uma coluna de 1fr cresce com o espaço disponível, e com
+   15 colunas numa tela grande cada uma vira bem maior que o selo da
+   letra). Sem isto elas ficavam enormes comparadas ao selo. */
 .tabuleiro .celula {
+  width: 100%;
+  max-width: 46px;
   aspect-ratio: 1;
   display: flex;
   align-items: center;
@@ -720,19 +878,28 @@ footer.rodape-evento {
   letter-spacing: 0.02em;
 }
 
-@media (max-width: 900px) {
-  .tabuleiro {
-    grid-template-columns: repeat(12, 1fr);
-  }
-}
-
 @media (max-width: 640px) {
   .cartao {
     padding: 22px;
   }
 
-  .tabuleiro {
-    grid-template-columns: repeat(8, 1fr);
+  .linha-tabuleiro {
+    gap: 8px;
+  }
+
+  .letra-linha {
+    width: 34px;
+    height: 34px;
+    font-size: 0.9rem;
+  }
+
+  .tabuleiro .celula {
+    max-width: 34px;
+  }
+
+  .celulas-linha {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
   }
 
   header h1 {

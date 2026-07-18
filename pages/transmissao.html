@@ -239,17 +239,29 @@
       }
     }
 
-    /* Anel dourado + halo suave SEM deslocamento (0 0, não "0 14px"):
-       a sombra deslocada só para baixo deixava o topo da bola com uma
-       transição seca (sem nenhum blur ali), o que lia como um corte
-       reto bem em cima da bola. Com blur simétrico em vez de sombra
-       projetada, a borda toda funde com o fundo por igual — e o blur
-       é pequeno e de tamanho fixo, então não vira "caixa" de novo. */
+    /* Mesmo relevo 3D da tela de controle (.pedra base, em
+       style.css), só com o aro e o halo escalando com --pedra-d em
+       vez de px fixo — precisa caber tanto numa projeção pequena
+       quanto num telão real. O halo SEM deslocamento (0 0, não
+       "0 14px") é proposital: uma sombra só pra baixo deixava o topo
+       da bola com uma transição seca, lendo como um corte reto bem
+       em cima dela; com blur simétrico a borda funde com o fundo por
+       igual. */
     body.transmissao .pedra {
       width: var(--pedra-d);
       height: var(--pedra-d);
-      box-shadow: 0 0 0 calc(var(--pedra-d) * 0.027) var(--dourado),
+      box-shadow:
+        inset calc(var(--pedra-d) * -0.045) calc(var(--pedra-d) * -0.055) calc(var(--pedra-d) * 0.1) rgba(126, 79, 15, 0.35),
+        inset calc(var(--pedra-d) * 0.027) calc(var(--pedra-d) * 0.027) calc(var(--pedra-d) * 0.064) rgba(255, 255, 255, 0.55),
         0 0 26px rgba(43, 33, 12, 0.3);
+    }
+
+    /* Anel de gradiente (mesma técnica de .pedra::after em
+       style.css), com espessura proporcional a --pedra-d em vez de
+       fixa em px. */
+    body.transmissao .pedra::after {
+      inset: calc(var(--pedra-d) * -0.018);
+      padding: calc(var(--pedra-d) * 0.018);
     }
 
     /* Fonte proporcional ao diâmetro da pedra: mesmo com "75" (2
@@ -286,7 +298,7 @@
     }
 
     body.transmissao .telefone-pessoa {
-      font-size: clamp(1.4rem, 2.4vmin, 2.1rem);
+      font-size: clamp(1.6rem, 2.6vmin, 2.3rem);
     }
   </style>
 </head>
