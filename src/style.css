@@ -623,17 +623,20 @@ main {
   gap: 12px;
 }
 
+/* Mesmo diâmetro do teto das células (ver .tabuleiro .celula) — selo
+   e números precisam ler como parte do mesmo conjunto de bolinhas,
+   não como um selo pequeno do lado de bolas bem maiores. */
 .letra-linha {
   flex: 0 0 auto;
-  width: 34px;
-  height: 34px;
+  width: 46px;
+  height: 46px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   font-family: var(--font-titulo);
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.15rem;
   color: #fff;
 }
 
@@ -659,9 +662,19 @@ main {
   display: grid;
   grid-template-columns: repeat(15, 1fr);
   gap: 8px;
+  /* Centraliza cada bolinha dentro da sua coluna: sem isto, o
+     max-width abaixo deixaria uma folga só do lado direito de cada
+     célula em vez de sobrar espaço igual dos dois lados. */
+  justify-items: center;
 }
 
+/* max-width trava o tamanho da bolinha para não inflar em telas
+   largas (uma coluna de 1fr cresce com o espaço disponível, e com
+   15 colunas numa tela grande cada uma vira bem maior que o selo da
+   letra). Sem isto elas ficavam enormes comparadas ao selo. */
 .tabuleiro .celula {
+  width: 100%;
+  max-width: 46px;
   aspect-ratio: 1;
   display: flex;
   align-items: center;
@@ -791,12 +804,11 @@ footer.rodape-evento {
   letter-spacing: 0.02em;
 }
 
-@media (max-width: 900px) {
-  .celulas-linha {
-    grid-template-columns: repeat(8, 1fr);
-  }
-}
-
+/* Abaixo de 640px o próprio .max-width das células já não teria mais
+   efeito de sobra: 15 colunas nessa largura ficariam menores que o
+   teto de 46px, então precisam de menos colunas para continuar
+   legíveis e do mesmo tamanho do selo da letra — os dois encolhem
+   juntos aqui. */
 @media (max-width: 640px) {
   .cartao {
     padding: 22px;
@@ -807,9 +819,13 @@ footer.rodape-evento {
   }
 
   .letra-linha {
-    width: 26px;
-    height: 26px;
-    font-size: 0.85rem;
+    width: 34px;
+    height: 34px;
+    font-size: 0.9rem;
+  }
+
+  .tabuleiro .celula {
+    max-width: 34px;
   }
 
   .celulas-linha {
