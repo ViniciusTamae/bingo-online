@@ -80,8 +80,20 @@ body {
   background: var(--bg1);
   background-image:
     linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%),
-    repeating-linear-gradient(45deg, rgba(43, 33, 12, 0.025) 0px, rgba(43, 33, 12, 0.025) 1px, transparent 1px, transparent 16px),
-    repeating-linear-gradient(-45deg, rgba(43, 33, 12, 0.025) 0px, rgba(43, 33, 12, 0.025) 1px, transparent 1px, transparent 16px);
+    repeating-linear-gradient(
+      45deg,
+      rgba(43, 33, 12, 0.025) 0px,
+      rgba(43, 33, 12, 0.025) 1px,
+      transparent 1px,
+      transparent 16px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(43, 33, 12, 0.025) 0px,
+      rgba(43, 33, 12, 0.025) 1px,
+      transparent 1px,
+      transparent 16px
+    );
   background-attachment: fixed;
 }
 
@@ -91,23 +103,42 @@ body {
 }
 
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slide-up {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.06); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
 }
 
 @keyframes brilho {
-  0% { box-shadow: 0 0 0 0 rgba(214, 40, 40, 0.5); }
-  100% { box-shadow: 0 0 0 10px rgba(214, 40, 40, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(214, 40, 40, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgba(214, 40, 40, 0);
+  }
 }
 
 /* ---------- Header ---------- */
@@ -130,7 +161,10 @@ header::after {
   background-size: cover;
   background-position: center 20%;
   border-radius: 50%;
-  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--dourado-linha), 0 6px 16px var(--sombra);
+  box-shadow:
+    0 0 0 3px #fff,
+    0 0 0 6px var(--dourado-linha),
+    0 6px 16px var(--sombra);
   pointer-events: none;
 }
 
@@ -151,7 +185,10 @@ header::after {
   display: block;
   object-fit: cover;
   border-radius: 50%;
-  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--dourado-linha), 0 6px 16px var(--sombra);
+  box-shadow:
+    0 0 0 3px #fff,
+    0 0 0 6px var(--dourado-linha),
+    0 6px 16px var(--sombra);
   animation: slide-up 0.5s var(--ease) both;
 }
 
@@ -211,7 +248,10 @@ header .subtitulo {
   font-weight: 600;
   font-size: 0.9rem;
   box-shadow: 0 4px 14px var(--sombra);
-  transition: transform var(--transicao), border-color var(--transicao), box-shadow var(--transicao);
+  transition:
+    transform var(--transicao),
+    border-color var(--transicao),
+    box-shadow var(--transicao);
   opacity: 0;
   animation: slide-up 0.5s var(--ease) 0.34s forwards;
 }
@@ -276,7 +316,9 @@ main {
   background: var(--bg1);
   color: var(--texto);
   text-align: center;
-  transition: border-color var(--transicao), box-shadow var(--transicao);
+  transition:
+    border-color var(--transicao),
+    box-shadow var(--transicao);
 }
 
 #input-numero::placeholder {
@@ -303,7 +345,10 @@ main {
   color: #fff;
   cursor: pointer;
   box-shadow: 0 6px 18px rgba(214, 40, 40, 0.35);
-  transition: background var(--transicao), transform var(--transicao), box-shadow var(--transicao);
+  transition:
+    background var(--transicao),
+    transform var(--transicao),
+    box-shadow var(--transicao);
 }
 
 #form-numero button:hover {
@@ -343,6 +388,7 @@ main {
   flex-direction: column;
   align-items: center;
   gap: 16px;
+  width: 100vw;
 }
 
 /* Sem transform: scale() aqui de propósito: em telas grandes (telão),
@@ -405,11 +451,22 @@ main {
   animation: marcar 0.35s var(--ease) 0.3s both;
 }
 
-.letra-bingo.cor-b { background: var(--col-b); }
-.letra-bingo.cor-i { background: var(--col-i); }
-.letra-bingo.cor-n { background: var(--col-n); color: var(--texto); }
-.letra-bingo.cor-g { background: var(--col-g); }
-.letra-bingo.cor-o { background: var(--col-o); }
+.letra-bingo.cor-b {
+  background: var(--col-b);
+}
+.letra-bingo.cor-i {
+  background: var(--col-i);
+}
+.letra-bingo.cor-n {
+  background: var(--col-n);
+  color: var(--texto);
+}
+.letra-bingo.cor-g {
+  background: var(--col-g);
+}
+.letra-bingo.cor-o {
+  background: var(--col-o);
+}
 
 /* O número sorteado — círculo vermelho enorme com borda dourada */
 .pedra {
@@ -421,7 +478,9 @@ main {
   align-items: center;
   justify-content: center;
   background: var(--vermelho);
-  box-shadow: 0 0 0 6px var(--dourado), 0 16px 40px rgba(214, 40, 40, 0.35);
+  box-shadow:
+    0 0 0 6px var(--dourado),
+    0 16px 40px rgba(214, 40, 40, 0.35);
   opacity: 0;
   animation: revelar 0.5s var(--ease) 0.05s forwards;
 }
@@ -506,7 +565,9 @@ main {
   background: var(--dourado);
   color: var(--texto);
   cursor: pointer;
-  transition: transform var(--transicao), box-shadow var(--transicao);
+  transition:
+    transform var(--transicao),
+    box-shadow var(--transicao);
 }
 
 #btn-limpar:hover,
@@ -543,7 +604,11 @@ main {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--texto-faint);
-  transition: background var(--transicao), color var(--transicao), border-color var(--transicao), transform var(--transicao);
+  transition:
+    background var(--transicao),
+    color var(--transicao),
+    border-color var(--transicao),
+    transform var(--transicao);
   cursor: pointer;
 }
 
@@ -618,7 +683,9 @@ main {
   border: none;
   border-radius: var(--radius-pill);
   cursor: pointer;
-  transition: transform var(--transicao), background var(--transicao);
+  transition:
+    transform var(--transicao),
+    background var(--transicao);
 }
 
 .modal-botoes button:hover {

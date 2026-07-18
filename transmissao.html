@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bingo Beneficente — Transmissão</title>
+  <link rel="icon" type="image/png" href="img/emblema-okinawa-marilia.png" />
   <link rel="stylesheet" href="src/style.css" />
   <style>
     /* Tela de captura para o telão (OBS) — mesma identidade visual do
@@ -48,6 +49,62 @@
       transform: rotate(8deg);
     }
 
+    /* Pétalas de cerejeira flutuando ao fundo — o telão fica parado
+       na maior parte do evento (entre um número e outro), e essa
+       deriva lenta mantém a tela viva sem competir com o número. Usa
+       a mesma cor "sakura" (--col-o) já reservada para a coluna O. */
+    .petalas {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .petala {
+      position: absolute;
+      top: -8vh;
+      width: 16px;
+      height: 16px;
+      background: var(--col-o);
+      opacity: 0.5;
+      border-radius: 0% 70% 70% 70%;
+      animation: cair-petala linear infinite;
+    }
+
+    @keyframes cair-petala {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(55vh) translateX(40px) rotate(180deg);
+      }
+      100% {
+        transform: translateY(118vh) translateX(-30px) rotate(360deg);
+      }
+    }
+
+    .petala:nth-child(1) { left: 2%; width: 12px; height: 12px; animation-duration: 19s; animation-delay: -2s; }
+    .petala:nth-child(2) { left: 8%; width: 20px; height: 20px; animation-duration: 24s; animation-delay: -9s; opacity: 0.35; }
+    .petala:nth-child(3) { left: 15%; width: 14px; height: 14px; animation-duration: 17s; animation-delay: -4s; }
+    .petala:nth-child(4) { left: 22%; width: 10px; height: 10px; animation-duration: 22s; animation-delay: -12s; opacity: 0.4; }
+    .petala:nth-child(5) { left: 29%; width: 18px; height: 18px; animation-duration: 26s; animation-delay: -6s; }
+    .petala:nth-child(6) { left: 36%; width: 13px; height: 13px; animation-duration: 20s; animation-delay: -15s; opacity: 0.35; }
+    .petala:nth-child(7) { left: 43%; width: 16px; height: 16px; animation-duration: 23s; animation-delay: -1s; }
+    .petala:nth-child(8) { left: 50%; width: 11px; height: 11px; animation-duration: 18s; animation-delay: -10s; opacity: 0.4; }
+    .petala:nth-child(9) { left: 57%; width: 19px; height: 19px; animation-duration: 25s; animation-delay: -7s; }
+    .petala:nth-child(10) { left: 64%; width: 13px; height: 13px; animation-duration: 21s; animation-delay: -13s; opacity: 0.4; }
+    .petala:nth-child(11) { left: 71%; width: 15px; height: 15px; animation-duration: 20s; animation-delay: -5s; }
+    .petala:nth-child(12) { left: 78%; width: 11px; height: 11px; animation-duration: 24s; animation-delay: -17s; opacity: 0.35; }
+    .petala:nth-child(13) { left: 85%; width: 18px; height: 18px; animation-duration: 18s; animation-delay: -3s; }
+    .petala:nth-child(14) { left: 92%; width: 12px; height: 12px; animation-duration: 22s; animation-delay: -11s; opacity: 0.4; }
+    .petala:nth-child(15) { left: 97%; width: 16px; height: 16px; animation-duration: 26s; animation-delay: -8s; }
+    .petala:nth-child(16) { left: 11%; width: 13px; height: 13px; animation-duration: 21s; animation-delay: -19s; opacity: 0.4; }
+    .petala:nth-child(17) { left: 33%; width: 17px; height: 17px; animation-duration: 19s; animation-delay: -14s; }
+    .petala:nth-child(18) { left: 61%; width: 12px; height: 12px; animation-duration: 25s; animation-delay: -6.5s; opacity: 0.35; }
+    .petala:nth-child(19) { left: 74%; width: 15px; height: 15px; animation-duration: 17s; animation-delay: -16s; }
+    .petala:nth-child(20) { left: 46%; width: 10px; height: 10px; animation-duration: 23s; animation-delay: -9.5s; opacity: 0.4; }
+
     .marca-evento {
       position: fixed;
       top: 36px;
@@ -55,7 +112,7 @@
       transform: translateX(-50%);
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 20px;
       padding: 12px 28px;
       background: rgba(255, 255, 255, 0.85);
       border: 1px solid var(--dourado-linha);
@@ -138,6 +195,39 @@
       z-index: 1;
     }
 
+    /* Halo pulsante atrás da pedra: dá profundidade ao círculo e ajuda
+       a leitura à distância, sem usar scale() (ver nota mais abaixo
+       sobre o bug de glifo corrompido — aqui é seguro pois anima um
+       pseudo-elemento vazio, não o texto do número). */
+    body.transmissao .pedra-container::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: var(--pedra-d);
+      height: var(--pedra-d);
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(244, 197, 66, 0.55) 0%, rgba(214, 40, 40, 0.18) 55%, transparent 75%);
+      filter: blur(18px);
+      z-index: 0;
+      animation: respirar-halo 2.6s ease-in-out infinite;
+    }
+
+    body.transmissao .pedra,
+    body.transmissao .letra-bingo {
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes respirar-halo {
+      0%, 100% {
+        opacity: 0.7;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+
     /* Anel dourado + halo suave SEM deslocamento (0 0, não "0 14px"):
        a sombra deslocada só para baixo deixava o topo da bola com uma
        transição seca (sem nenhum blur ali), o que lia como um corte
@@ -172,12 +262,47 @@
       padding-inline: 24px;
     }
 
+    /* Placa dourada por trás do nome do contemplado: o nome sorteado
+       é a informação que decide quem ganha, então ganha o mesmo
+       tratamento de "selo" usado no resto da identidade (pílula
+       branca + borda dourada), em vez de ficar só flutuando no ar. */
+    body.transmissao .nome-pessoa:not(.sem-nome) {
+      background: rgba(255, 255, 255, 0.92);
+      border: 2px solid var(--dourado-linha);
+      border-radius: var(--radius-pill);
+      padding: 14px clamp(28px, 4vmin, 48px);
+      box-shadow: 0 10px 30px var(--sombra);
+    }
+
     body.transmissao .telefone-pessoa {
       font-size: clamp(1.4rem, 2.4vmin, 2.1rem);
     }
   </style>
 </head>
 <body class="transmissao">
+  <div class="petalas" aria-hidden="true">
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+    <span class="petala"></span>
+  </div>
+
   <div class="marca-evento">
     <img src="img/emblema-okinawa-marilia.png" alt="Emblema Okinawa Marília" />
     <div class="textos">
