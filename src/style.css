@@ -11,7 +11,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("../assets/fonts/poppins-600.woff2") format("woff2");
+  src: url("fonts/poppins-600.woff2") format("woff2");
 }
 
 @font-face {
@@ -19,7 +19,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("../assets/fonts/poppins-700.woff2") format("woff2");
+  src: url("fonts/poppins-700.woff2") format("woff2");
 }
 
 @font-face {
@@ -27,19 +27,17 @@
   font-style: normal;
   font-weight: 400 600;
   font-display: swap;
-  src: url("../assets/fonts/inter-variable.woff2") format("woff2");
+  src: url("fonts/inter-variable.woff2") format("woff2");
 }
 
 :root {
   /* Paleta oficial do evento */
-  --vermelho: #ecdddd;
+  --vermelho: #f9e076;
   --vermelho-escuro: #b81f1f;
   --laranja: #f77f00;
-  --dourado: rgb(133, 133, 133);
+  --dourado: #f4c542;
   --dourado-linha: rgba(244, 197, 66, 0.5);
 
-  --bg1: #fff6e9;
-  --bg2: #f9e9c8;
   --texto: #2b2b2b;
   --texto-dim: rgba(43, 43, 43, 0.65);
   --texto-faint: rgba(43, 43, 43, 0.4);
@@ -157,7 +155,7 @@ header::after {
   top: 14px;
   width: 84px;
   height: 84px;
-  background-image: url("../assets/img/mascote-shishi-soba.png");
+  background-image: url("../img/mascote-shishi-soba.png");
   background-size: cover;
   background-position: center 20%;
   border-radius: 50%;
@@ -298,15 +296,8 @@ main {
   gap: 10px;
 }
 
-/* width: 100% é o que faz o flex-wrap funcionar de verdade: o pai
-   (.painel-entrada) usa align-items: center, então sem uma largura
-   explícita este flex item encolhe para caber no conteúdo em vez de
-   ocupar a largura do cartão — e só quebra linha quando estoura a
-   tela inteira (rolagem horizontal), em vez de quebrar dentro do
-   cartão como devia. */
 #form-numero {
   display: flex;
-  width: 100%;
   gap: 12px;
   flex-wrap: wrap;
   justify-content: center;
@@ -314,7 +305,6 @@ main {
 
 #input-numero {
   width: 240px;
-  max-width: 100%;
   padding: 16px 20px;
   font-family: var(--font-titulo);
   font-size: 1.2rem;
@@ -499,7 +489,7 @@ main {
   font-family: var(--font-titulo);
   font-size: 5rem;
   font-weight: 700;
-  color: #2b2b2b;
+  color: #100101;
 }
 
 /* Foto da pedra (se existir na pasta img/) */
@@ -551,28 +541,15 @@ main {
 }
 
 /* ---------- Histórico ---------- */
-/* "space-between" com só dois itens (título + grupo de botões): numa
-   tela larga eles ficam nas pontas; se não couber e quebrar linha, o
-   grupo de botões (que é uma unidade só, não cada botão solto) desce
-   inteiro para a linha de baixo alinhado à esquerda — antes o
-   "Reiniciar" tinha margin-left:auto próprio e, ao quebrar sozinho,
-   ficava flutuando isolado lá na ponta direita. */
 .historico h2 {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 10px 12px;
+  gap: 12px;
   margin-bottom: 8px;
   font-family: var(--font-titulo);
   font-weight: 700;
   font-size: 1.3rem;
-}
-
-.acoes-historico {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
 }
 
 #btn-limpar,
@@ -597,6 +574,10 @@ main {
   box-shadow: 0 4px 14px rgba(244, 197, 66, 0.5);
 }
 
+#btn-limpar {
+  margin-left: auto;
+}
+
 .dica-desmarcar {
   font-size: 0.85rem;
   color: var(--texto-faint);
@@ -604,77 +585,12 @@ main {
 }
 
 .tabuleiro {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* Cada linha é uma faixa do bingo (B/I/N/G/O): o selo da letra à
-   esquerda usa a mesma cor daquela coluna na pedra sorteada, para o
-   tabuleiro ensinar de cabra a relação letra-número mesmo antes do
-   primeiro sorteio. */
-/* align-items: flex-start (não center) porque em telas estreitas as
-   15 células de uma letra quebram em várias linhas — com "center" o
-   selo da letra flutuava no meio do bloco em vez de alinhar com a
-   primeira linha de números. */
-.linha-tabuleiro {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-/* Mesmo diâmetro do teto das células (ver .tabuleiro .celula) — selo
-   e números precisam ler como parte do mesmo conjunto de bolinhas,
-   não como um selo pequeno do lado de bolas bem maiores. */
-.letra-linha {
-  flex: 0 0 auto;
-  width: 46px;
-  height: 46px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-family: var(--font-titulo);
-  font-weight: 700;
-  font-size: 1.15rem;
-  color: #fff;
-}
-
-.letra-linha.cor-b {
-  background: var(--col-b);
-}
-.letra-linha.cor-i {
-  background: var(--col-i);
-}
-.letra-linha.cor-n {
-  background: var(--col-n);
-  color: var(--texto);
-}
-.letra-linha.cor-g {
-  background: var(--col-g);
-}
-.letra-linha.cor-o {
-  background: var(--col-o);
-}
-
-.celulas-linha {
-  flex: 1;
   display: grid;
   grid-template-columns: repeat(15, 1fr);
   gap: 8px;
-  /* Centraliza cada bolinha dentro da sua coluna: sem isto, o
-     max-width abaixo deixaria uma folga só do lado direito de cada
-     célula em vez de sobrar espaço igual dos dois lados. */
-  justify-items: center;
 }
 
-/* max-width trava o tamanho da bolinha para não inflar em telas
-   largas (uma coluna de 1fr cresce com o espaço disponível, e com
-   15 colunas numa tela grande cada uma vira bem maior que o selo da
-   letra). Sem isto elas ficavam enormes comparadas ao selo. */
 .tabuleiro .celula {
-  width: 100%;
-  max-width: 46px;
   aspect-ratio: 1;
   display: flex;
   align-items: center;
@@ -804,33 +720,19 @@ footer.rodape-evento {
   letter-spacing: 0.02em;
 }
 
-/* Abaixo de 640px o próprio .max-width das células já não teria mais
-   efeito de sobra: 15 colunas nessa largura ficariam menores que o
-   teto de 46px, então precisam de menos colunas para continuar
-   legíveis e do mesmo tamanho do selo da letra — os dois encolhem
-   juntos aqui. */
+@media (max-width: 900px) {
+  .tabuleiro {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+
 @media (max-width: 640px) {
   .cartao {
     padding: 22px;
   }
 
-  .linha-tabuleiro {
-    gap: 8px;
-  }
-
-  .letra-linha {
-    width: 34px;
-    height: 34px;
-    font-size: 0.9rem;
-  }
-
-  .tabuleiro .celula {
-    max-width: 34px;
-  }
-
-  .celulas-linha {
-    grid-template-columns: repeat(5, 1fr);
-    gap: 6px;
+  .tabuleiro {
+    grid-template-columns: repeat(8, 1fr);
   }
 
   header h1 {
