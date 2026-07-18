@@ -176,9 +176,11 @@
        O min(vmin, vh) considera a ALTURA também — só o vmin não
        segurava a pedra o suficiente em telas baixas/pouco altas (um
        monitor comum de PC, não um telão), onde o resto da pilha
-       (letra + nome + telefone) não cabia embaixo dela. */
+       (letra + nome + telefone) não cabia embaixo dela. Valores
+       aumentados: quem está mais longe do telão real não conseguia
+       ler o número. */
     body.transmissao {
-      --pedra-d: clamp(220px, min(32vmin, 42vh), 520px);
+      --pedra-d: clamp(300px, min(46vmin, 56vh), 680px);
     }
 
     /* Mensagem de espera, visível até o primeiro número ser sorteado */
