@@ -31,17 +31,19 @@ function criarPedraElemento(numero) {
   numeroEl.textContent = numero;
   pedraEl.appendChild(numeroEl);
 
-  // Se existir uma foto em img/<numero>.jpg ou img/<numero>.png,
-  // ela aparece por cima da bola desenhada.
+  // Se existir uma foto em assets/img/<numero>.jpg ou .png, ela
+  // aparece por cima da bola desenhada. Caminho relativo às páginas
+  // em pages/ (index.html e transmissao.html), que é quem carrega
+  // este script.
   const foto = document.createElement("img");
   foto.alt = `Pedra ${numero}`;
   foto.hidden = true;
   foto.onload = () => { foto.hidden = false; };
   foto.onerror = () => {
     foto.onerror = null;
-    foto.src = `img/${numero}.png`;
+    foto.src = `../assets/img/${numero}.png`;
   };
-  foto.src = `img/${numero}.jpg`;
+  foto.src = `../assets/img/${numero}.jpg`;
   pedraEl.appendChild(foto);
 
   const nomeEl = document.createElement("div");

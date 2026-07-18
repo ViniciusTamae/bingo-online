@@ -11,7 +11,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("fonts/poppins-600.woff2") format("woff2");
+  src: url("../assets/fonts/poppins-600.woff2") format("woff2");
 }
 
 @font-face {
@@ -19,7 +19,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("fonts/poppins-700.woff2") format("woff2");
+  src: url("../assets/fonts/poppins-700.woff2") format("woff2");
 }
 
 @font-face {
@@ -27,7 +27,7 @@
   font-style: normal;
   font-weight: 400 600;
   font-display: swap;
-  src: url("fonts/inter-variable.woff2") format("woff2");
+  src: url("../assets/fonts/inter-variable.woff2") format("woff2");
 }
 
 :root {
@@ -157,7 +157,7 @@ header::after {
   top: 14px;
   width: 84px;
   height: 84px;
-  background-image: url("../img/mascote-shishi-soba.png");
+  background-image: url("../assets/img/mascote-shishi-soba.png");
   background-size: cover;
   background-position: center 20%;
   border-radius: 50%;
@@ -587,6 +587,58 @@ main {
 }
 
 .tabuleiro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Cada linha é uma faixa do bingo (B/I/N/G/O): o selo da letra à
+   esquerda usa a mesma cor daquela coluna na pedra sorteada, para o
+   tabuleiro ensinar de cabra a relação letra-número mesmo antes do
+   primeiro sorteio. */
+/* align-items: flex-start (não center) porque em telas estreitas as
+   15 células de uma letra quebram em várias linhas — com "center" o
+   selo da letra flutuava no meio do bloco em vez de alinhar com a
+   primeira linha de números. */
+.linha-tabuleiro {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.letra-linha {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: var(--font-titulo);
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.letra-linha.cor-b {
+  background: var(--col-b);
+}
+.letra-linha.cor-i {
+  background: var(--col-i);
+}
+.letra-linha.cor-n {
+  background: var(--col-n);
+  color: var(--texto);
+}
+.letra-linha.cor-g {
+  background: var(--col-g);
+}
+.letra-linha.cor-o {
+  background: var(--col-o);
+}
+
+.celulas-linha {
+  flex: 1;
   display: grid;
   grid-template-columns: repeat(15, 1fr);
   gap: 8px;
@@ -723,8 +775,8 @@ footer.rodape-evento {
 }
 
 @media (max-width: 900px) {
-  .tabuleiro {
-    grid-template-columns: repeat(12, 1fr);
+  .celulas-linha {
+    grid-template-columns: repeat(8, 1fr);
   }
 }
 
@@ -733,8 +785,19 @@ footer.rodape-evento {
     padding: 22px;
   }
 
-  .tabuleiro {
-    grid-template-columns: repeat(8, 1fr);
+  .linha-tabuleiro {
+    gap: 8px;
+  }
+
+  .letra-linha {
+    width: 26px;
+    height: 26px;
+    font-size: 0.85rem;
+  }
+
+  .celulas-linha {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
   }
 
   header h1 {

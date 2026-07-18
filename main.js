@@ -12,7 +12,7 @@ function criarJanela() {
   });
 
   Menu.setApplicationMenu(null);
-  win.loadFile(path.join(__dirname, "index.html"));
+  win.loadFile(path.join(__dirname, "pages", "index.html"));
 }
 
 app.whenReady().then(() => {

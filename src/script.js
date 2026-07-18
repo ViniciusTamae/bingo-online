@@ -17,23 +17,45 @@ const btnDesfazer = document.getElementById("btn-desfazer");
 let sorteados = JSON.parse(localStorage.getItem("bingo-sorteados") || "[]");
 
 // ---------- Tabuleiro de 1 a 75 (clique na bolinha para sortear) ----------
+// Uma linha por faixa do bingo (B 1-15, I 16-30, N 31-45, G 46-60,
+// O 61-75), com o selo da letra à esquerda — a mesma separação usada
+// na pedra sorteada.
 function montarTabuleiro() {
   tabuleiro.innerHTML = "";
-  for (let n = 1; n <= 75; n++) {
-    const celula = document.createElement("div");
-    celula.className = "celula";
-    celula.id = `celula-${n}`;
-    celula.textContent = n;
-    celula.title = `Clique para sortear o ${n}`;
-    if (sorteados.includes(n)) celula.classList.add("sorteado");
-    celula.addEventListener("click", () => {
-      if (sorteados.includes(n)) {
-        abrirModalDesmarcar(n);
-      } else {
-        realizarSorteio(n);
-      }
-    });
-    tabuleiro.appendChild(celula);
+
+  for (let inicio = 1; inicio <= 75; inicio += 15) {
+    const letra = letraDoNumero(inicio);
+
+    const linha = document.createElement("div");
+    linha.className = "linha-tabuleiro";
+
+    const selo = document.createElement("div");
+    selo.className = `letra-linha cor-${letra.toLowerCase()}`;
+    selo.textContent = letra;
+    linha.appendChild(selo);
+
+    const celulas = document.createElement("div");
+    celulas.className = "celulas-linha";
+
+    for (let n = inicio; n < inicio + 15; n++) {
+      const celula = document.createElement("div");
+      celula.className = "celula";
+      celula.id = `celula-${n}`;
+      celula.textContent = n;
+      celula.title = `Clique para sortear o ${n}`;
+      if (sorteados.includes(n)) celula.classList.add("sorteado");
+      celula.addEventListener("click", () => {
+        if (sorteados.includes(n)) {
+          abrirModalDesmarcar(n);
+        } else {
+          realizarSorteio(n);
+        }
+      });
+      celulas.appendChild(celula);
+    }
+
+    linha.appendChild(celulas);
+    tabuleiro.appendChild(linha);
   }
 }
 

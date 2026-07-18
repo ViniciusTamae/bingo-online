@@ -5,7 +5,7 @@ animação e o nome da pessoa correspondente aparece embaixo.
 
 ## Como usar
 
-1. Abra o arquivo `index.html` no navegador (basta dar dois cliques nele).
+1. Abra o arquivo `pages/index.html` no navegador (basta dar dois cliques nele).
 2. Digite um número de 1 a 75 e clique em **Enviar**.
 3. A pedra sobe com animação, mostrando a letra do bingo (B-I-N-G-O), o
    número e o nome da pessoa embaixo.
@@ -28,22 +28,23 @@ const NOMES = {
 
 ## Fotos das pedras (opcional)
 
-Coloque fotos na pasta `img/` com o número como nome do arquivo
-(`img/1.jpg`, `img/2.png`, etc.). Se a foto existir, ela aparece no lugar
-da bola desenhada.
+Coloque fotos na pasta `assets/img/` com o número como nome do arquivo
+(`assets/img/1.jpg`, `assets/img/2.png`, etc.). Se a foto existir, ela
+aparece no lugar da bola desenhada.
 
 ## Arquivos
 
-| Arquivo            | O que é                                          |
-| ------------------ | ------------------------------------------------- |
-| `index.html`        | Página principal                                  |
-| `transmissao.html`  | Tela limpa para transmissão/captura (OBS)         |
-| `main.js`           | Processo principal do Electron (app desktop)      |
-| `src/style.css`     | Visual e animações                                |
-| `src/script.js`     | Lógica do jogo                                    |
-| `src/pedra.js`      | Criação da pedra (compartilhado entre as telas)   |
-| `src/nomes.js`      | Lista de nomes (edite aqui!)                      |
-| `img/`              | Fotos opcionais das pedras                        |
+| Arquivo                     | O que é                                          |
+| ---------------------------- | ------------------------------------------------- |
+| `pages/index.html`           | Página principal                                  |
+| `pages/transmissao.html`     | Tela limpa para transmissão/captura (OBS)         |
+| `main.js`                    | Processo principal do Electron (app desktop)      |
+| `src/style.css`              | Visual e animações                                |
+| `src/script.js`               | Lógica do jogo                                    |
+| `src/pedra.js`                | Criação da pedra (compartilhado entre as telas)   |
+| `src/nomes.js`                | Lista de nomes (edite aqui!)                      |
+| `assets/img/`                | Logo, mascote e fotos opcionais das pedras        |
+| `assets/fonts/`              | Fontes do evento (Poppins e Inter)                |
 
 ## Baixar como programa para Windows (.exe)
 
