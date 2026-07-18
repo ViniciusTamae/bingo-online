@@ -18,31 +18,34 @@
       position: relative;
     }
 
-    /* Cerejeiras nos quatro cantos — mais espaço disponível aqui do
-       que na tela de controle, então a moldura fica completa. */
+    /* Mascote (leão comendo soba) como selinho circular em dois
+       cantos — mais espaço disponível aqui do que na tela de
+       controle, então o selo fica maior. */
     body.transmissao::before,
     body.transmissao::after {
       content: "";
       position: absolute;
-      width: 170px;
-      height: 170px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23e07a93' fill-opacity='0.5'%3E%3Cellipse cx='50' cy='28' rx='13' ry='19'/%3E%3Cellipse cx='50' cy='28' rx='13' ry='19' transform='rotate(72 50 50)'/%3E%3Cellipse cx='50' cy='28' rx='13' ry='19' transform='rotate(144 50 50)'/%3E%3Cellipse cx='50' cy='28' rx='13' ry='19' transform='rotate(216 50 50)'/%3E%3Cellipse cx='50' cy='28' rx='13' ry='19' transform='rotate(288 50 50)'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='7' fill='%23f4c542' fill-opacity='0.7'/%3E%3C/svg%3E");
-      background-size: contain;
-      background-repeat: no-repeat;
+      width: 150px;
+      height: 150px;
+      background-image: url("img/mascote-shishi-soba.png");
+      background-size: cover;
+      background-position: center 20%;
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px #fff, 0 0 0 9px var(--dourado-linha), 0 10px 24px var(--sombra);
       pointer-events: none;
       z-index: 1;
     }
 
     body.transmissao::before {
-      top: -20px;
-      left: -20px;
-      transform: rotate(-18deg);
+      top: 28px;
+      left: 28px;
+      transform: rotate(-8deg);
     }
 
     body.transmissao::after {
-      bottom: -20px;
-      right: -20px;
-      transform: rotate(162deg);
+      bottom: 28px;
+      right: 28px;
+      transform: rotate(8deg);
     }
 
     .marca-evento {
@@ -61,10 +64,11 @@
       z-index: 2;
     }
 
-    .marca-evento img,
-    .marca-evento svg {
+    .marca-evento img {
       width: 36px;
       height: 36px;
+      object-fit: cover;
+      border-radius: 50%;
     }
 
     .marca-evento .textos {
@@ -88,22 +92,18 @@
       color: var(--vermelho-escuro);
     }
 
-    /* Brilho suave atrás da pedra, para destacar o número no telão */
-    .palco::before {
-      content: "";
-      position: absolute;
-      width: 480px;
-      height: 480px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(244, 197, 66, 0.35) 0%, transparent 70%);
-      z-index: 0;
-    }
-
     body.transmissao .palco {
       position: relative;
       min-height: 100vh;
       margin: 0;
       z-index: 1;
+    }
+
+    /* Diâmetro-mestre da pedra no telão: escala com o menor lado da
+       tela (vmin) para caber tanto em projeções 16:9 quanto 4:3, com
+       piso e teto para não ficar minúsculo nem estourar a moldura. */
+    body.transmissao {
+      --pedra-d: clamp(300px, 34vmin, 520px);
     }
 
     /* Mensagem de espera, visível até o primeiro número ser sorteado */
@@ -138,42 +138,48 @@
       z-index: 1;
     }
 
+    /* Anel dourado + halo suave SEM deslocamento (0 0, não "0 14px"):
+       a sombra deslocada só para baixo deixava o topo da bola com uma
+       transição seca (sem nenhum blur ali), o que lia como um corte
+       reto bem em cima da bola. Com blur simétrico em vez de sombra
+       projetada, a borda toda funde com o fundo por igual — e o blur
+       é pequeno e de tamanho fixo, então não vira "caixa" de novo. */
     body.transmissao .pedra {
-      width: 280px;
-      height: 280px;
+      width: var(--pedra-d);
+      height: var(--pedra-d);
+      box-shadow: 0 0 0 calc(var(--pedra-d) * 0.027) var(--dourado),
+        0 0 26px rgba(43, 33, 12, 0.3);
     }
 
+    /* Fonte proporcional ao diâmetro da pedra: mesmo com "75" (2
+       dígitos), o texto nunca encosta na borda do círculo. */
     body.transmissao .pedra span {
-      font-size: 6.4rem;
+      font-size: calc(var(--pedra-d) * 0.365);
     }
 
     body.transmissao .letra-bingo {
-      font-size: 1.6rem;
-      padding: 8px 24px;
+      font-size: clamp(2.4rem, 4.6vmin, 3.6rem);
+      padding: clamp(10px, 1.4vmin, 18px) clamp(30px, 4.4vmin, 52px);
     }
 
+    /* Largura máxima + quebra de linha: nomes longos descem para a
+       segunda linha em vez de estourar a tela ou serem cortados. */
     body.transmissao .nome-pessoa {
-      font-size: 2.6rem;
+      font-size: clamp(2.2rem, 4.6vmin, 3.6rem);
+      max-width: min(92vw, 1400px);
+      line-height: 1.2;
+      overflow-wrap: break-word;
+      padding-inline: 24px;
     }
 
     body.transmissao .telefone-pessoa {
-      font-size: 1.8rem;
+      font-size: clamp(1.4rem, 2.4vmin, 2.1rem);
     }
   </style>
 </head>
 <body class="transmissao">
   <div class="marca-evento">
-    <svg viewBox="0 0 100 100" role="img" aria-label="Emblema do evento">
-      <circle cx="50" cy="50" r="47" fill="#FFFFFF" stroke="#F4C542" stroke-width="4" />
-      <g fill="#D62828">
-        <ellipse cx="50" cy="34" rx="10" ry="15" />
-        <ellipse cx="50" cy="34" rx="10" ry="15" transform="rotate(72 50 50)" />
-        <ellipse cx="50" cy="34" rx="10" ry="15" transform="rotate(144 50 50)" />
-        <ellipse cx="50" cy="34" rx="10" ry="15" transform="rotate(216 50 50)" />
-        <ellipse cx="50" cy="34" rx="10" ry="15" transform="rotate(288 50 50)" />
-      </g>
-      <circle cx="50" cy="50" r="9" fill="#F4C542" />
-    </svg>
+    <img src="img/emblema-okinawa-marilia.png" alt="Emblema Okinawa Marília" />
     <div class="textos">
       <p class="titulo">Bingo Beneficente</p>
       <p class="subtitulo">18º Festa do Soba Okinawa</p>

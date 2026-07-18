@@ -47,11 +47,16 @@ function limparErro() {
 }
 
 // ---------- Pedra com animação (prévia na tela de controle) ----------
+// Trocar a pedra pode mudar a altura do palco, o que desloca o conteúdo
+// abaixo dele (ex.: o tabuleiro). Guardamos o scroll e restauramos depois
+// para quem clicou numa bolinha do tabuleiro não ver a tela "pular".
 function sortearPedra(numero) {
+  const scrollAntes = window.scrollY;
   dica.hidden = true;
   const containerAntigo = palco.querySelector(".pedra-container");
   if (containerAntigo) containerAntigo.remove();
   palco.appendChild(criarPedraElemento(numero));
+  window.scrollTo(0, scrollAntes);
 }
 
 // Avisa a tela de transmissão qual foi a última pedra sorteada
@@ -92,6 +97,17 @@ form.addEventListener("submit", (evento) => {
   realizarSorteio(parseInt(input.value, 10));
 });
 
+// Some com a pedra do palco sem deixar a página "pular" para cima:
+// remover a pedra encolhe o palco, e o navegador mantém o scrollY fixo,
+// então o conteúdo abaixo sobe visualmente. Restauramos o scroll depois.
+function esconderPedraSemPular() {
+  const scrollAntes = window.scrollY;
+  const container = palco.querySelector(".pedra-container");
+  if (container) container.remove();
+  dica.hidden = false;
+  window.scrollTo(0, scrollAntes);
+}
+
 // ---------- Desmarcar um número (corrige clique/digitação errada) ----------
 function desmarcarNumero(numero) {
   const indice = sorteados.indexOf(numero);
@@ -106,16 +122,13 @@ function desmarcarNumero(numero) {
   const ultimo = JSON.parse(localStorage.getItem("bingo-ultimo") || "null");
   if (ultimo && ultimo.numero === numero) {
     localStorage.removeItem("bingo-ultimo");
-    const container = palco.querySelector(".pedra-container");
-    if (container) container.remove();
-    dica.hidden = false;
+    esconderPedraSemPular();
   }
 }
 
 btnDesfazer.addEventListener("click", () => {
   if (sorteados.length === 0) return;
   desmarcarNumero(sorteados[sorteados.length - 1]);
-  input.focus();
 });
 
 // ---------- Pop-up de confirmação ao desmarcar um número ----------
@@ -134,7 +147,6 @@ function abrirModalDesmarcar(numero) {
 function fecharModalDesmarcar() {
   modalDesmarcar.hidden = true;
   numeroParaDesmarcar = null;
-  input.focus();
 }
 
 btnCancelarDesmarcar.addEventListener("click", fecharModalDesmarcar);
@@ -178,10 +190,7 @@ btnConfirmarReinicio.addEventListener("click", () => {
   localStorage.removeItem("bingo-sorteados");
   localStorage.removeItem("bingo-ultimo");
   montarTabuleiro();
-  const container = palco.querySelector(".pedra-container");
-  if (container) container.remove();
-  dica.hidden = false;
-  input.focus();
+  esconderPedraSemPular();
 });
 
 montarTabuleiro();

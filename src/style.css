@@ -118,35 +118,40 @@ header {
   overflow: hidden;
 }
 
-/* Flores de cerejeira discretas nas extremidades */
+/* Mascote (leão comendo soba) nos cantos, como selinho circular */
 header::before,
 header::after {
   content: "";
   position: absolute;
-  top: 6px;
-  width: 92px;
-  height: 92px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23e07a93' fill-opacity='0.55'%3E%3Cellipse cx='50' cy='28' rx='13' ry='19'/%3E%3Cellipse cx='50' cy='28' rx='13' ry='19' transform='rotate(72 50 50)'/%3E%3Cellipse cx='50' cy='28' rx='13' ry='19' transform='rotate(144 50 50)'/%3E%3Cellipse cx='50' cy='28' rx='13' ry='19' transform='rotate(216 50 50)'/%3E%3Cellipse cx='50' cy='28' rx='13' ry='19' transform='rotate(288 50 50)'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='7' fill='%23f4c542' fill-opacity='0.75'/%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
+  top: 14px;
+  width: 84px;
+  height: 84px;
+  background-image: url("../img/mascote-shishi-soba.png");
+  background-size: cover;
+  background-position: center 20%;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--dourado-linha), 0 6px 16px var(--sombra);
   pointer-events: none;
-  opacity: 0.7;
 }
 
 header::before {
-  left: -12px;
-  transform: rotate(-18deg);
+  left: 16px;
+  transform: rotate(-8deg);
 }
 
 header::after {
-  right: -12px;
-  transform: rotate(24deg) scaleX(-1);
+  right: 16px;
+  transform: rotate(8deg);
 }
 
 .logo-evento {
   width: 68px;
   height: 68px;
   margin: 0 auto 18px;
+  display: block;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--dourado-linha), 0 6px 16px var(--sombra);
   animation: slide-up 0.5s var(--ease) both;
 }
 
@@ -340,29 +345,37 @@ main {
   gap: 16px;
 }
 
+/* Sem transform: scale() aqui de propósito: em telas grandes (telão),
+   a fonte do número fica enorme, e escalar um elemento com texto
+   assim é um gatilho conhecido para o Chrome corromper o glifo
+   renderizado pela GPU — o número aparece com um "corte" reto no meio
+   (bug real, visto em produção). translateY não tem esse problema,
+   porque não reamostra o texto em tamanhos intermediários. */
 @keyframes revelar {
   0% {
-    transform: scale(0.5);
+    transform: translateY(18px);
     opacity: 0;
   }
   70% {
-    transform: scale(1.08);
+    transform: translateY(-4px);
     opacity: 1;
   }
   100% {
-    transform: scale(1);
+    transform: translateY(0);
     opacity: 1;
   }
 }
 
+/* Mesmo motivo do @keyframes revelar: sem scale() para não arriscar
+   corromper o glifo da letra em telas grandes. */
 @keyframes marcar {
   from {
     opacity: 0;
-    transform: translateY(6px) scale(0.8);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
