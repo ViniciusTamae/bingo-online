@@ -298,8 +298,15 @@ main {
   gap: 10px;
 }
 
+/* width: 100% é o que faz o flex-wrap funcionar de verdade: o pai
+   (.painel-entrada) usa align-items: center, então sem uma largura
+   explícita este flex item encolhe para caber no conteúdo em vez de
+   ocupar a largura do cartão — e só quebra linha quando estoura a
+   tela inteira (rolagem horizontal), em vez de quebrar dentro do
+   cartão como devia. */
 #form-numero {
   display: flex;
+  width: 100%;
   gap: 12px;
   flex-wrap: wrap;
   justify-content: center;
@@ -307,6 +314,7 @@ main {
 
 #input-numero {
   width: 240px;
+  max-width: 100%;
   padding: 16px 20px;
   font-family: var(--font-titulo);
   font-size: 1.2rem;
@@ -543,15 +551,28 @@ main {
 }
 
 /* ---------- Histórico ---------- */
+/* "space-between" com só dois itens (título + grupo de botões): numa
+   tela larga eles ficam nas pontas; se não couber e quebrar linha, o
+   grupo de botões (que é uma unidade só, não cada botão solto) desce
+   inteiro para a linha de baixo alinhado à esquerda — antes o
+   "Reiniciar" tinha margin-left:auto próprio e, ao quebrar sozinho,
+   ficava flutuando isolado lá na ponta direita. */
 .historico h2 {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px 12px;
   margin-bottom: 8px;
   font-family: var(--font-titulo);
   font-weight: 700;
   font-size: 1.3rem;
+}
+
+.acoes-historico {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 #btn-limpar,
@@ -574,10 +595,6 @@ main {
 #btn-desfazer:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 14px rgba(244, 197, 66, 0.5);
-}
-
-#btn-limpar {
-  margin-left: auto;
 }
 
 .dica-desmarcar {
