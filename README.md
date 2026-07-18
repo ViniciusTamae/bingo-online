@@ -15,7 +15,7 @@ animação e o nome da pessoa correspondente aparece embaixo.
 
 ## Como cadastrar os nomes
 
-Edite o arquivo `src/nomes.js`. Cada número tem um nome:
+Edite o arquivo `src/js/nomes.js`. Cada número tem um nome:
 
 ```js
 const NOMES = {
@@ -39,10 +39,12 @@ aparece no lugar da bola desenhada.
 | `pages/index.html`           | Página principal                                  |
 | `pages/transmissao.html`     | Tela limpa para transmissão/captura (OBS)         |
 | `main.js`                    | Processo principal do Electron (app desktop)      |
-| `src/style.css`              | Visual e animações                                |
-| `src/script.js`               | Lógica do jogo                                    |
-| `src/pedra.js`                | Criação da pedra (compartilhado entre as telas)   |
-| `src/nomes.js`                | Lista de nomes (edite aqui!)                      |
+| `src/css/base.css`            | Fontes, paleta (variáveis), reset e animações      |
+| `src/css/componentes.css`     | Visual dos componentes (header, cartões, pedra...) |
+| `src/js/tabuleiro.js`         | Estado do jogo, tabuleiro e sorteio/desmarcação   |
+| `src/js/modais.js`            | Pop-ups de confirmação (desmarcar e reiniciar)    |
+| `src/js/pedra.js`             | Criação da pedra (compartilhado entre as telas)   |
+| `src/js/nomes.js`             | Lista de nomes (edite aqui!)                      |
 | `assets/img/`                | Logo, mascote e fotos opcionais das pedras        |
 | `assets/fonts/`              | Fontes do evento (Poppins e Inter)                |
 

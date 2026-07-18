@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bingo Beneficente — Transmissão</title>
   <link rel="icon" type="image/png" href="../assets/img/emblema-okinawa-marilia.png" />
-  <link rel="stylesheet" href="../src/style.css" />
+  <link rel="stylesheet" href="../src/css/base.css" />
+  <link rel="stylesheet" href="../src/css/componentes.css" />
   <style>
     /* Tela de captura para o telão (OBS) — mesma identidade visual do
        evento, com marca discreta no topo e brilho atrás da pedra para
@@ -64,15 +65,22 @@
       z-index: 0;
     }
 
+    /* Cada <span class="petala"> traz seus próprios --x/--s/--dur/
+       --atraso/--opacidade inline (ver HTML). Uma regra só lê essas
+       variáveis, em vez de 20 seletores nth-child soltos no CSS — os
+       valores de cada pétala ficam junto da própria pétala, não
+       espalhados aqui. */
     .petala {
       position: absolute;
       top: -8vh;
-      width: 16px;
-      height: 16px;
+      left: var(--x);
+      width: var(--s);
+      height: var(--s);
       background: var(--col-o);
-      opacity: 0.5;
+      opacity: var(--opacidade, 0.5);
       border-radius: 0% 70% 70% 70%;
-      animation: cair-petala linear infinite;
+      animation: cair-petala var(--dur) linear infinite;
+      animation-delay: var(--atraso);
     }
 
     @keyframes cair-petala {
@@ -86,27 +94,6 @@
         transform: translateY(118vh) translateX(-30px) rotate(360deg);
       }
     }
-
-    .petala:nth-child(1) { left: 2%; width: 12px; height: 12px; animation-duration: 19s; animation-delay: -2s; }
-    .petala:nth-child(2) { left: 8%; width: 20px; height: 20px; animation-duration: 24s; animation-delay: -9s; opacity: 0.35; }
-    .petala:nth-child(3) { left: 15%; width: 14px; height: 14px; animation-duration: 17s; animation-delay: -4s; }
-    .petala:nth-child(4) { left: 22%; width: 10px; height: 10px; animation-duration: 22s; animation-delay: -12s; opacity: 0.4; }
-    .petala:nth-child(5) { left: 29%; width: 18px; height: 18px; animation-duration: 26s; animation-delay: -6s; }
-    .petala:nth-child(6) { left: 36%; width: 13px; height: 13px; animation-duration: 20s; animation-delay: -15s; opacity: 0.35; }
-    .petala:nth-child(7) { left: 43%; width: 16px; height: 16px; animation-duration: 23s; animation-delay: -1s; }
-    .petala:nth-child(8) { left: 50%; width: 11px; height: 11px; animation-duration: 18s; animation-delay: -10s; opacity: 0.4; }
-    .petala:nth-child(9) { left: 57%; width: 19px; height: 19px; animation-duration: 25s; animation-delay: -7s; }
-    .petala:nth-child(10) { left: 64%; width: 13px; height: 13px; animation-duration: 21s; animation-delay: -13s; opacity: 0.4; }
-    .petala:nth-child(11) { left: 71%; width: 15px; height: 15px; animation-duration: 20s; animation-delay: -5s; }
-    .petala:nth-child(12) { left: 78%; width: 11px; height: 11px; animation-duration: 24s; animation-delay: -17s; opacity: 0.35; }
-    .petala:nth-child(13) { left: 85%; width: 18px; height: 18px; animation-duration: 18s; animation-delay: -3s; }
-    .petala:nth-child(14) { left: 92%; width: 12px; height: 12px; animation-duration: 22s; animation-delay: -11s; opacity: 0.4; }
-    .petala:nth-child(15) { left: 97%; width: 16px; height: 16px; animation-duration: 26s; animation-delay: -8s; }
-    .petala:nth-child(16) { left: 11%; width: 13px; height: 13px; animation-duration: 21s; animation-delay: -19s; opacity: 0.4; }
-    .petala:nth-child(17) { left: 33%; width: 17px; height: 17px; animation-duration: 19s; animation-delay: -14s; }
-    .petala:nth-child(18) { left: 61%; width: 12px; height: 12px; animation-duration: 25s; animation-delay: -6.5s; opacity: 0.35; }
-    .petala:nth-child(19) { left: 74%; width: 15px; height: 15px; animation-duration: 17s; animation-delay: -16s; }
-    .petala:nth-child(20) { left: 46%; width: 10px; height: 10px; animation-duration: 23s; animation-delay: -9.5s; opacity: 0.4; }
 
     /* Tudo aqui escala com vmin (logo, texto, espaçamentos) em vez de
        usar px fixo: sem isso, em janelas/resoluções menores o texto
@@ -254,7 +241,7 @@
     }
 
     /* Mesmo relevo 3D da tela de controle (.pedra base, em
-       style.css), só com o aro e o halo escalando com --pedra-d em
+       componentes.css), só com o aro e o halo escalando com --pedra-d em
        vez de px fixo — precisa caber tanto numa projeção pequena
        quanto num telão real. O halo SEM deslocamento (0 0, não
        "0 14px") é proposital: uma sombra só pra baixo deixava o topo
@@ -271,7 +258,7 @@
     }
 
     /* Anel de gradiente (mesma técnica de .pedra::after em
-       style.css), com espessura proporcional a --pedra-d em vez de
+       componentes.css), com espessura proporcional a --pedra-d em vez de
        fixa em px. */
     body.transmissao .pedra::after {
       inset: calc(var(--pedra-d) * -0.018);
@@ -318,26 +305,26 @@
 </head>
 <body class="transmissao">
   <div class="petalas" aria-hidden="true">
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
-    <span class="petala"></span>
+    <span class="petala" style="--x: 2%;  --s: 12px; --dur: 19s; --atraso: -2s;"></span>
+    <span class="petala" style="--x: 8%;  --s: 20px; --dur: 24s; --atraso: -9s;   --opacidade: 0.35;"></span>
+    <span class="petala" style="--x: 15%; --s: 14px; --dur: 17s; --atraso: -4s;"></span>
+    <span class="petala" style="--x: 22%; --s: 10px; --dur: 22s; --atraso: -12s;  --opacidade: 0.4;"></span>
+    <span class="petala" style="--x: 29%; --s: 18px; --dur: 26s; --atraso: -6s;"></span>
+    <span class="petala" style="--x: 36%; --s: 13px; --dur: 20s; --atraso: -15s;  --opacidade: 0.35;"></span>
+    <span class="petala" style="--x: 43%; --s: 16px; --dur: 23s; --atraso: -1s;"></span>
+    <span class="petala" style="--x: 50%; --s: 11px; --dur: 18s; --atraso: -10s;  --opacidade: 0.4;"></span>
+    <span class="petala" style="--x: 57%; --s: 19px; --dur: 25s; --atraso: -7s;"></span>
+    <span class="petala" style="--x: 64%; --s: 13px; --dur: 21s; --atraso: -13s;  --opacidade: 0.4;"></span>
+    <span class="petala" style="--x: 71%; --s: 15px; --dur: 20s; --atraso: -5s;"></span>
+    <span class="petala" style="--x: 78%; --s: 11px; --dur: 24s; --atraso: -17s;  --opacidade: 0.35;"></span>
+    <span class="petala" style="--x: 85%; --s: 18px; --dur: 18s; --atraso: -3s;"></span>
+    <span class="petala" style="--x: 92%; --s: 12px; --dur: 22s; --atraso: -11s;  --opacidade: 0.4;"></span>
+    <span class="petala" style="--x: 97%; --s: 16px; --dur: 26s; --atraso: -8s;"></span>
+    <span class="petala" style="--x: 11%; --s: 13px; --dur: 21s; --atraso: -19s;  --opacidade: 0.4;"></span>
+    <span class="petala" style="--x: 33%; --s: 17px; --dur: 19s; --atraso: -14s;"></span>
+    <span class="petala" style="--x: 61%; --s: 12px; --dur: 25s; --atraso: -6.5s; --opacidade: 0.35;"></span>
+    <span class="petala" style="--x: 74%; --s: 15px; --dur: 17s; --atraso: -16s;"></span>
+    <span class="petala" style="--x: 46%; --s: 10px; --dur: 23s; --atraso: -9.5s; --opacidade: 0.4;"></span>
   </div>
 
   <div class="marca-evento">
@@ -365,8 +352,8 @@
     </div>
   </section>
 
-  <script src="../src/nomes.js"></script>
-  <script src="../src/pedra.js"></script>
+  <script src="../src/js/nomes.js"></script>
+  <script src="../src/js/pedra.js"></script>
   <script>
     // A tela de transmissão fica observando o último número sorteado
     // (gravado pela tela de controle no localStorage) e anima a pedra
