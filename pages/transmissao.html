@@ -105,25 +105,34 @@
     .petala:nth-child(19) { left: 74%; width: 15px; height: 15px; animation-duration: 17s; animation-delay: -16s; }
     .petala:nth-child(20) { left: 46%; width: 10px; height: 10px; animation-duration: 23s; animation-delay: -9.5s; opacity: 0.4; }
 
+    /* Tudo aqui escala com vmin (logo, texto, espaçamentos) em vez de
+       usar px fixo: sem isso, em janelas/resoluções menores o texto
+       quebrava linha (sem espaço pro tamanho fixo dele) e o selo
+       crescia em altura só por baixo — a logo, com tamanho fixo,
+       ficava centralizada nesse bloco mais alto e parecia "descer"
+       por cima do texto. Com nowrap + clamp(), texto e logo encolhem
+       juntos e nunca quebram linha. */
     .marca-evento {
       position: fixed;
-      top: 36px;
+      top: clamp(16px, 3vmin, 36px);
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       align-items: center;
-      gap: 20px;
-      padding: 12px 28px;
+      gap: clamp(10px, 2vmin, 20px);
+      padding: clamp(8px, 1.6vmin, 12px) clamp(16px, 3vmin, 28px);
       background: rgba(255, 255, 255, 0.85);
       border: 1px solid var(--dourado-linha);
       border-radius: var(--radius-pill);
       box-shadow: 0 8px 24px var(--sombra);
       z-index: 2;
+      max-width: 92vw;
     }
 
     .marca-evento img {
-      width: 36px;
-      height: 36px;
+      flex-shrink: 0;
+      width: clamp(24px, 4vmin, 36px);
+      height: clamp(24px, 4vmin, 36px);
       object-fit: cover;
       border-radius: 50%;
     }
@@ -136,17 +145,19 @@
     .marca-evento .titulo {
       font-family: var(--font-titulo);
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: clamp(0.85rem, 2.2vmin, 1.1rem);
       color: var(--texto);
+      white-space: nowrap;
     }
 
     .marca-evento .subtitulo {
       font-family: var(--font-corpo);
       font-weight: 600;
-      font-size: 0.75rem;
+      font-size: clamp(0.6rem, 1.4vmin, 0.75rem);
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--vermelho-escuro);
+      white-space: nowrap;
     }
 
     body.transmissao .palco {
