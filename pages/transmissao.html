@@ -150,6 +150,18 @@
       white-space: nowrap;
     }
 
+    /* Em telas baixas (uma janela de PC de teste, não um telão de
+       verdade), a pilha central (letra + pedra + nome + telefone) já
+       ocupa quase toda a altura — o selo fixo no topo passa a
+       sobrepor a letra da coluna. Some com ele abaixo desse limite
+       para abrir espaço; o selo é reforço de marca, a pilha central é
+       a informação que realmente importa. */
+    @media (max-height: 650px) {
+      .marca-evento {
+        display: none;
+      }
+    }
+
     body.transmissao .palco {
       position: relative;
       min-height: 100vh;
