@@ -21,7 +21,7 @@ header::after {
   top: 14px;
   width: 84px;
   height: 84px;
-  background-image: url("../assets/img/mascote-shishi-soba.png");
+  background-image: url("../../assets/img/mascote-shishi-soba.png");
   background-size: cover;
   background-position: center 20%;
   border-radius: 50%;
